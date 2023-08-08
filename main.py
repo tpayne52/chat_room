@@ -21,6 +21,7 @@ def generate_unique_code(length):
     return code
 
 @app.route("/", methods=["POST", "GET"])
+@app.route("/home", methods=["POST", "GET"])
 def home():
     session.clear()
     if request.method == "POST":
@@ -48,11 +49,16 @@ def home():
 
     return render_template("home.html")
 
-@app.route("/room")
+@app.route("/room", methods=["POST", "GET"])
 def room():
     room = session.get("room")
     if room is None or session.get("name") is None or room not in rooms:
         return redirect(url_for("home"))
+    
+    if request.method == "POST":
+        if request.form.get("leave") == "true":
+            return redirect(url_for("home"))
+    
     return render_template("room.html", code=room, messages=rooms[room]["messages"])
 
 @socketio.on("message")
@@ -93,10 +99,11 @@ def disconnect():
     if room in rooms:
         rooms[room]["members"] -= 1
         if rooms[room]["members"] <= 0:
+            print(f"Room {room} was deleted!")
             del rooms[room]
 
     send({"name": name, "message": "has left the room"}, to=room)
     print(f"{name} has left the room {room}")
 
 if __name__ == "__main__":
-    socketio.run(app, debug=True, port="8002")
+    socketio.run(app, debug=True)

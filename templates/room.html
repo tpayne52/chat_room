@@ -6,6 +6,9 @@
     <div class="inputs">
         <input type="text" rows="3" placeholder="Message" name="message" id="message">
         <button type="button" name="send" id="send-bth" onClick="sendMessage()">Send</button>
+        <form method="post">
+            <button type="submit" value="true" name="leave">Leave Room</button>
+        </form>
     </div>
 </div>
 <script type="text/javascript">
@@ -37,6 +40,7 @@
         socketio.emit("message", {data: message.value})
         message.value = "";
     };
+
 </script>
 {% for msg in messages %}
     <script type="text/javascript">
