@@ -1,0 +1,154 @@
+h3 {
+    text-align: center;
+    color: #f9f9f9;
+    margin: auto;
+    width: 75vw;
+    font-size: 2rem;
+    padding: .75em 0;
+}
+
+.chatting {
+    color: #A2FF86;
+}
+
+.errors > li {
+    text-align: center;
+    font-size: 1.25rem;
+    color: #ff3333;
+    padding: .5em;
+}
+
+.name {
+    display: flex;
+    color: #F9F9F9;
+    justify-content: center;
+    text-align: center;
+    font-size: 1.5rem;
+    padding: 1em;
+}
+
+.name-input {
+    margin: 0 0 0 1em;
+}
+
+p {
+    text-align: center;
+    color: #F9F9F9;
+    font-size: 1.5rem;
+    padding: 1em 0;
+}
+
+hr {
+    width: 85%;
+    height: 2px;
+    background-color: #B3005E;
+    border: 0 none;
+    margin: auto;
+}
+
+.sign-in-container, .room-card {
+    background-color: #060047;
+    margin: auto;
+    width: 60vw;
+    height: 25vh;
+    border-radius: 16px;
+    box-shadow: 2px 2px 20px black;
+}
+
+.room-card {
+    height: 30vh;
+    margin-top: 6em;
+}
+
+.room-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1em;
+    padding: 1em;
+}
+
+.room-container > button, .room-container > .join {
+    flex: 2 1 0px;
+}
+
+.room-container > p {
+    flex: 2 2 0px;
+}
+
+.room-input {
+    width: 96%;
+}
+
+.join {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+button {
+    font-size: 1rem;
+    color: #f9f9f9;
+    padding: .5em;
+    background-color: #FF5F9E;
+    border: none;
+    border-radius: 1em;
+    cursor: pointer;
+}
+
+.join-btn {
+    margin: .25em 0 0 0;
+}
+
+
+button:hover {
+    background-color: #E90064;
+}
+
+
+@media (max-width: 703px) {
+    button, .errors > li {
+        font-size: .8rem;
+    }
+
+    button {
+        padding: .5em;
+    }
+
+    p, .name {
+        font-size: 1rem;
+    }
+
+    .join-btn {
+        margin: .5em 0 0 0;
+    }
+}
+
+@media (max-width: 498px) {
+    .room-container {
+        gap: .25em;
+    }
+}
+
+@media (max-width: 458px) {
+    button, .errors > li {
+        font-size: .5rem;
+    }
+
+    button {
+        padding: .5em;
+    }
+
+    p, .name {
+        font-size: .7rem;
+    }
+
+    .join-btn {
+        margin: .5em 0 0 0;
+    }
+}
+
+
+
+

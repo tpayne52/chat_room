@@ -1,20 +1,34 @@
 {% extends 'base.html' %}
+{% block style %}
+    <link rel="stylesheet" href="{{url_for('static', filename='css/home.css')}}"/>
+{% endblock %}
 {% block content %}
+<h3>Lets Start <span class="chatting">Chatting...</span></h3>
 <form method="post" class="buttons">
-    <h3>Enter The Chat Room</h3>
-    <div>
-        <label>Name:</label>
-        <input type="text" placeholder="Pick a name!" name="name" value="{{name}}">
+    <div class="sign-in-container">
+        <p>Create your name!</p>
+        <hr>
+        <div class="name">
+            <label>Name:</label>
+            <input type="text" class="name-input" placeholder="Pick a name!" name="name" value="{{name}}">
+        </div>
     </div>
-    <div class="join">
-        <input type="text" placeholder="Room Code" name="code" value="{{code}}">
-        <button type="submit" name="join">Join a Room</button>
-    </div>
-    <button type="submit" name="create" class="create-btn">Create a Room</button>
-    {% if error %}
-    <ul>
-        <li>{{error}}</li>
-    </ul>
+    <div class="room-card">    
+        <p>Create or join and existing room!</p>
+        <hr>
+        <div class="room-container">
+            <button type="submit" name="create" class="create-btn">Create a Room</button>
+            <p>or</p>
+            <div class="join">
+                <input type="text" class="room-input" placeholder="Room Code" name="code" value="{{code}}">
+                <button type="submit" class="join-btn"name="join">Join Room</button>
+            </div>
+        </div>
+        {% if error %}
+        <ul class="errors">
+            <li>**{{error}}**</li>
+        </ul>
     {% endif %}
+    </div>
 </form>
 {% endblock %}
