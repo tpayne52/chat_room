@@ -1,0 +1,100 @@
+.room-container {
+    display: grid;
+    height: 100vh;
+    grid-template-rows: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.room-box {
+    grid-row: 1;
+    grid-column: 1;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+}
+
+.room-code {
+    font-size: 1.5rem;
+    color: #f9f9f9;
+    font-family: 'Roboto', sans-serif;
+    background-color: #060047;
+    border-radius: 16px;
+    padding: 1em;
+    box-shadow: 2px 2px 20px black;
+}
+
+.room-val {
+    color: #A2FF86;
+}
+
+.chatters-box {
+    grid-area: 2 / 1 / 5 / 1;  
+    color:#f9f9f9;
+    text-align: center;
+    background-color: #060047;
+}
+
+.chatter-title {
+    background-color: #060047;
+    color:#FF5F9E;
+    text-align: center;
+    margin-top: 16px;
+    font-size: 1.5rem;
+}
+
+.chatters {
+    overflow-y: scroll;
+    flex: 1;
+    width: 100%;
+}
+
+.leave-box {
+    grid-row: 5;
+    grid-column: 1;
+    display: flex;
+    justify-content: center; 
+    align-items: center;
+    background-color: #060047;
+}
+
+.leave-btn {
+    font-size: 1.5rem;
+    padding: 1em;
+    color: #f9f9f9;
+    border: none;
+    border-radius: 16px;
+    background-color: #ff3333;
+    cursor: pointer;
+}
+
+.message-box {
+    grid-area: 1 / 2 / 6 / 5;
+    background-color: #f9f9f9;
+    border-radius: 16px 0px 0px 0px;
+    margin-top: 32px; 
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+#message {
+    flex: 1;
+}
+
+.text {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.muted {
+    font-size: 10px;
+    color: darkgray;
+}
+
+.leave-btn:hover, .leave-btn:focus {
+    background-color: red;
+}

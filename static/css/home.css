@@ -102,7 +102,7 @@ button {
 }
 
 
-button:hover {
+button:hover,  button:focus{
     background-color: #E90064;
 }
 
