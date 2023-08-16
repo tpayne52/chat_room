@@ -1,26 +1,56 @@
 {% extends 'base.html' %}
+{% block style %}
+    <link rel="stylesheet" href="{{url_for('static', filename='css/room.css')}}"/> 
+{% endblock %}
 {% block content %}
-<div class="message-box">
-    <h2>Chat Room: {{code}}</h2>
-    <h3>Chatters: <span id="users"></span></h3>
-    <div class="messages" id="messages"></div>
-    <div class="inputs">
-        <input type="text" rows="3" placeholder="Message" name="message" id="message">
-        <button type="button" name="send" id="send-bth" onClick="sendMessage()">Send</button>
-        <form method="post">
-            <button type="submit" value="true" name="leave">Leave Room</button>
-        </form>
+<div class="room-container">
+    <div class="room-box">
+        <div class="room-code">Room Code: <span class="room-val">{{code}}</span></div>
+    </div>
+    <div class="chatters-box">
+        <div class="chatter-title">Chatters: <span id="users"></span> <span class="fa-solid fa-users"></span></div>
+        <div class="chatters" id="chatters"></div>
+    </div>
+    
+    <div class="message-box">
+        <div class="messages" id="messages"></div>
+        <div class="inputs">
+            <input type="text" rows="3" placeholder="Message" name="message" id="message">
+            <button type="button" name="send" id="send-bth" onClick="sendMessage()">Send</button>
+        </div>
+    </div>    
+    <form class="leave-box" method="post">
+        <button class="leave-btn" type="submit" value="true" name="leave">Leave Room</button>
+    </form>
     </div>
 </div>
+
 <script type="text/javascript">
     var socketio = io();
 
-    const messages = document.getElementById("messages")
+    const messages = document.getElementById("messages");
     const users = document.getElementById("users");
+    const chatters = document.getElementById("chatters");
 
-    socketio.on("userChange", (data) => {
+    socketio.on("userJoin", (data) => {
         users.textContent = data.chatters;
+        createChatter(data.name);
     });
+
+    socketio.on("userLeave", (data) => {
+        users.textContent = data.chatters;
+    }); 
+
+    const createChatter = (name) => {
+        const content = `
+            <div>${name}</div>
+        `
+        chatters.innerHTML += content;
+    };
+
+    const removeChatter = (name) => {
+        
+    };
 
     const createMessage = (name, msg) => {
         const content = `
@@ -46,16 +76,17 @@
         socketio.emit("message", {data: message.value})
         message.value = "";
     };
-    /* sendMessage() is called
-        socketio.emit responses with the message value
-        the "message" event handler is called and createMessage accordingly
-    */
-    
 
 </script>
+
 {% for msg in messages %}
     <script type="text/javascript">
-        createMessage("{{msg.name}}", "{{msg.message}}")
+        createMessage("{{msg.name}}", "{{msg.message}}");
+    </script>
+{% endfor %}
+{% for chatter in chatters %}
+    <script type="text/javascript">
+        createChatter("{{chatter}}");
     </script>
 {% endfor %}
 {% endblock %}
