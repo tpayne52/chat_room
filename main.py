@@ -88,9 +88,9 @@ def connect(auth):
     join_room(room)
     rooms[room]["members"] += 1
     send({"name": name, "message": "has entered the room"}, to=room)
+    socketio.emit("userJoin", {"chatters": rooms[room]["members"], "name": name}, to=room)
     rooms[room]["chatters"].append(name)
-    socketio.emit("userJoin", {"chatters": rooms[room]["members"], "name": name})
-    print(f"{name} joined room {room}")
+    print(f"{name} joined room {room}") 
 
 @socketio.on("disconnect")
 def disconnect():
@@ -105,7 +105,7 @@ def disconnect():
             print(f"Room {room} was deleted!")
             del rooms[room]
         else:
-            socketio.emit("userLeave", {"chatters": rooms[room]["members"], "name": name})
+            socketio.emit("userLeave", {"chatters": rooms[room]["members"], "name": name}, to=room)
 
     send({"name": name, "message": "has left the room"}, to=room)
     print(f"{name} has left the room {room}")

@@ -39,17 +39,19 @@
 
     socketio.on("userLeave", (data) => {
         users.textContent = data.chatters;
+        removeChatter(data.name);
     }); 
 
     const createChatter = (name) => {
         const content = `
-            <div>${name}</div>
+            <div id="${name}">${name}</div>
         `
         chatters.innerHTML += content;
     };
 
     const removeChatter = (name) => {
-        
+        const chatter = document.getElementById(name)
+        chatters.removeChild(chatter);
     };
 
     const createMessage = (name, msg) => {
