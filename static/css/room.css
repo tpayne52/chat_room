@@ -39,7 +39,7 @@
     background-color: #060047;
     color:#FF5F9E;
     text-align: center;
-    margin-top: 16px;
+    margin: 16px 0px;
     font-size: 1.5rem;
 }
 
@@ -99,3 +99,23 @@
 .leave-btn:hover, .leave-btn:focus {
     background-color: red;
 }
+
+@keyframes userJoin {
+    0% { transform: translateY(0px); color: #FF5F9E; }
+    50% { transform: translateY(-10px); color: green; }
+    100% { transform: translateY(0px); color: #FF5F9E; }
+}
+
+@keyframes userLeave {
+    0% { transform: translateY(0px); color: #FF5F9E; }
+    50% { transform: translateY(10px); color: red; }
+    100% { transform: translateY(0px); color: #FF5F9E; }
+}
+
+.userJoin {
+    animation: userJoin 1s  1;
+ }   
+
+.userLeave {
+    animation: userLeave 1s  1;
+}   

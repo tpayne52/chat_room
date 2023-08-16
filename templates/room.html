@@ -8,7 +8,7 @@
         <div class="room-code">Room Code: <span class="room-val">{{code}}</span></div>
     </div>
     <div class="chatters-box">
-        <div class="chatter-title">Chatters: <span id="users"></span> <span class="fa-solid fa-users"></span></div>
+        <div class="chatter-title">Chatters: <span id="users"></span> <span class="fa-solid fa-users" id="icon"></span></div>
         <div class="chatters" id="chatters"></div>
     </div>
     
@@ -31,16 +31,31 @@
     const messages = document.getElementById("messages");
     const users = document.getElementById("users");
     const chatters = document.getElementById("chatters");
+    const animatedIcon = document.getElementById("icon")
+    const animatedUsers = document.getElementById("users")
 
     socketio.on("userJoin", (data) => {
         users.textContent = data.chatters;
+        runAnimation("userJoin", "userLeave");
         createChatter(data.name);
     });
 
     socketio.on("userLeave", (data) => {
         users.textContent = data.chatters;
+        runAnimation("userLeave", "userJoin");
         removeChatter(data.name);
     }); 
+
+    const runAnimation = (run, stop) => {
+        animatedIcon.classList.remove(stop);
+        animatedUsers.classList.remove(stop);
+        setTimeout(() => {
+            animatedIcon.classList.add(run);
+            animatedUsers.classList.add(run);
+        }, 10);
+        animatedIcon.classList.toggle(run);
+        animatedUsers.classList.toggle(run);
+    };
 
     const createChatter = (name) => {
         const content = `
