@@ -38,7 +38,7 @@ def home():
         room = code
         if create != False:
             room = generate_unique_code(4)
-            rooms[room] = {"members": 0, "messages": []}
+            rooms[room] = {"members": 0, "messages": [], "chatters": []}
         elif code not in rooms:
             return render_template("home.html", error="Room does not exist.", code=code, name=name)
         
@@ -58,7 +58,8 @@ def room():
         if request.form.get("leave") == "true":
             return redirect(url_for("home"))
     
-    return render_template("room.html", code=room, messages=rooms[room]["messages"])
+    return render_template("room.html", code=room, messages=rooms[room]["messages"],
+                            chatters=rooms[room]["chatters"])
 
 @socketio.on("message")
 def message(data):
@@ -87,7 +88,8 @@ def connect(auth):
     join_room(room)
     rooms[room]["members"] += 1
     send({"name": name, "message": "has entered the room"}, to=room)
-    socketio.emit("userChange", {"chatters": rooms[room]["members"]})
+    rooms[room]["chatters"].append(name)
+    socketio.emit("userJoin", {"chatters": rooms[room]["members"], "name": name})
     print(f"{name} joined room {room}")
 
 @socketio.on("disconnect")
@@ -98,11 +100,12 @@ def disconnect():
 
     if room in rooms:
         rooms[room]["members"] -= 1
+        rooms[room]["chatters"].remove(name)
         if rooms[room]["members"] <= 0:
             print(f"Room {room} was deleted!")
             del rooms[room]
         else:
-            socketio.emit("userChange", {"chatters": rooms[room]["members"]})
+            socketio.emit("userLeave", {"chatters": rooms[room]["members"], "name": name})
 
     send({"name": name, "message": "has left the room"}, to=room)
     print(f"{name} has left the room {room}")

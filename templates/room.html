@@ -28,12 +28,29 @@
 <script type="text/javascript">
     var socketio = io();
 
-    const messages = document.getElementById("messages")
+    const messages = document.getElementById("messages");
     const users = document.getElementById("users");
+    const chatters = document.getElementById("chatters");
 
-    socketio.on("userChange", (data) => {
+    socketio.on("userJoin", (data) => {
         users.textContent = data.chatters;
+        createChatter(data.name);
     });
+
+    socketio.on("userLeave", (data) => {
+        users.textContent = data.chatters;
+    }); 
+
+    const createChatter = (name) => {
+        const content = `
+            <div>${name}</div>
+        `
+        chatters.innerHTML += content;
+    };
+
+    const removeChatter = (name) => {
+        
+    };
 
     const createMessage = (name, msg) => {
         const content = `
@@ -61,9 +78,15 @@
     };
 
 </script>
+
 {% for msg in messages %}
     <script type="text/javascript">
-        createMessage("{{msg.name}}", "{{msg.message}}")
+        createMessage("{{msg.name}}", "{{msg.message}}");
+    </script>
+{% endfor %}
+{% for chatter in chatters %}
+    <script type="text/javascript">
+        createChatter("{{chatter}}");
     </script>
 {% endfor %}
 {% endblock %}
