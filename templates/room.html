@@ -8,14 +8,14 @@
         <div class="room-code">Room Code: <span class="room-val">{{code}}</span></div>
     </div>
     <div class="chatters-box">
-        <div class="chatter-title">Chatters: <span id="users"></span> <span class="fa-solid fa-users" id="icon"></span></div>
-        <div class="chatters" id="chatters"></div>
+        <div class="chatter-title">Chatters: <span id="users"></span> <span class="fa-solid fa-users" id="icon"></span></div> 
+        <div class="chatters" id="chatters"></div> 
     </div>
     
     <div class="message-box">
         <div class="messages" id="messages"></div>
         <div class="inputs">
-            <input type="text" rows="3" placeholder="Message" name="message" id="message">
+            <input type="text" placeholder="Message" name="message" id="message">
             <button type="button" name="send" id="send-bth" onClick="sendMessage()">Send</button>
         </div>
     </div>    
@@ -72,9 +72,10 @@
     const createMessage = (name, msg) => {
         const content = `
         <div class="text">
-            <span>
-                <strong>${name}</strong>: ${msg}
-            </span>
+            <ul class="bubble">
+                <li>${name}</li>
+                <li>${msg}</li>
+            </ul>
             <span class="muted">
                 ${new Date().toLocaleString()}
             </span>
@@ -93,6 +94,7 @@
         socketio.emit("message", {data: message.value})
         message.value = "";
     };
+
 
 </script>
 
